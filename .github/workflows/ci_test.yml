@@ -1,0 +1,92 @@
+name: Test deployment from a PR
+
+on: pull_request
+
+env:
+  DBT_PROFILE_TARGET:            test
+  DBT_PROFILE_SNOWFLAKE_ACCOUNT: ${{ secrets.DBT_PROFILE_SNOWFLAKE_ACCOUNT }}
+  DBT_PROFILE_USER:              ${{ secrets.DBT_PROFILE_TEST_USER }}
+  DBT_PROFILE_PASSWORD:          ${{ secrets.DBT_PROFILE_TEST_PASSWORD }}
+  DBT_PROFILE_ROLE:              DBT_TPCH_CICD_TEST_TRANSFORMER
+  DBT_PROFILE_DB:                DBT_TPCH_CICD_TEST
+  DBT_PROFILE_WH:                DBT_TPCH_CICD_TEST_WH
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout branch
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+
+    - name: Install Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+
+    - name: Install DBT
+      run: |
+        python -m pip install --upgrade pip
+        pip install dbt
+        pip install sqlfluff
+        pip install datafold-sdk==0.0.2
+        dbt deps
+
+    ## have moved linting to sqlfluff action
+    # - name: Lint SQL
+    #   run: |
+    #     diff-quality --violations sqlfluff --compare-branch origin/main
+    
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-southeast-2
+        role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+        # role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
+        role-duration-seconds: 1200
+        role-session-name: MySessionName
+
+    - name: Get the last manifest.json from s3
+      run: |
+        aws s3 cp s3://dbt-tutorial-sf/prod/manifest/manifest.json ./target/last_manifest/manifest.json 
+
+    - name: Check if manifest exists
+      run : |
+        pwd
+        cd ./target/last_manifest
+        ls
+        cd ../..
+
+    - name: Deploy
+      run: |
+        export DBT_PROFILE_SCHEMA=pr_$(date +%s)
+        dbt seed --select state:modified --state ./target/last_manifest --full-refresh --profiles-dir ./ci_profiles
+        dbt run --models state:modified --defer --state ./target/last_manifest --profiles-dir ./ci_profiles
+        dbt test --models state:modified --defer --state ./target/last_manifest --profiles-dir ./ci_profiles
+
+    - name: Datafold dbt upload check manifest
+      run: |
+        echo $DATAFOLD_APIKEY
+        ls ./target
+        cat ./target/manifest.json
+
+    - name: Datafold dbt upload check run_results.json
+      run: |
+        pwd
+        cat ./target/run_results.json
+
+    - name: Submit artifacts to datafold
+      run: |
+          PR_HEAD_SHA=$(cat $GITHUB_EVENT_PATH | jq -r .pull_request.head.sha)
+          echo $PR_HEAD_SHA $GITHUB_SHA
+          datafold dbt upload --ci-config-id 12 --run-type=pull_request \
+              --target-folder ./target \
+              --commit-sha $PR_HEAD_SHA
+      env:
+        DATAFOLD_APIKEY: ${{ secrets.DATAFOLD_APIKEY }}
+  
+    

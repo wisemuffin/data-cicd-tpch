@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": "/home/dave/miniconda3/envs/dbt/bin/python",
+    "sql.linter.executablePath": "/home/dave/miniconda3/envs/dbt/bin",
+    "sql.linter.run": "onType"
+}

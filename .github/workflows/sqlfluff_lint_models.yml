@@ -1,0 +1,91 @@
+name: SQLFluff lint dbt data models
+
+on: pull_request
+
+jobs:
+  sqlfluff-lint-models:
+    # runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: ['ubuntu-latest']
+        python-version: [3.8]
+    env:
+      DBT_PROFILE_TARGET:            test
+      DBT_PROFILE_SNOWFLAKE_ACCOUNT: ${{ secrets.DBT_PROFILE_SNOWFLAKE_ACCOUNT }}
+      DBT_PROFILE_USER:              ${{ secrets.DBT_PROFILE_TEST_USER }}
+      DBT_PROFILE_PASSWORD:          ${{ secrets.DBT_PROFILE_TEST_PASSWORD }}
+      DBT_PROFILE_ROLE:              DBT_TPCH_CICD_TEST_TRANSFORMER
+      DBT_PROFILE_DB:                DBT_TPCH_CICD_TEST
+      DBT_PROFILE_WH:                DBT_TPCH_CICD_TEST_WH
+      DBT_PROFILES_DIR:              /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/ci_profiles
+
+    steps:
+    - name: Checkout PR by removing the merge into main
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+
+    - name: Setup conda environment
+      uses: conda-incubator/setup-miniconda@v2
+      with:
+        activate-environment: dbt-sqlfluff-env
+        python-version: ${{ matrix.python-version }}
+        auto-update-conda: true
+        auto-activate-base: false
+        environment-file: environment.yml
+        show-channel-urls: true
+        # use-only-tar-bz2: true
+
+    - name: dbt install deps
+      shell: bash -l {0}
+      run: |
+        dbt deps
+
+    - name: Get changed files
+      id: get_file_changes
+      uses: trilom/file-changes-action@v1.2.3
+      with:
+        output: ' '
+
+    - name: Get changed .sql files in /models and /analysis to lint
+      id: get_files_to_lint
+      # Full credit for this step to Teghan Nightengale!
+      run: |
+        # Set the command in the $() brackets as an output to use in later steps
+        echo "::set-output name=lintees::$(
+        # Issue where grep regular expressions don't work as expected on the
+        # Github Actions shell, check models/ and analysis/ folders seperately
+        echo \
+        $(echo ${{ steps.get_file_changes.outputs.files }} |
+        tr -s ' ' '\n' |
+        grep -E '^models.*[.]sql$' |
+        tr -s '\n' ' ') \
+        $(echo ${{ steps.get_file_changes.outputs.files }} |
+        tr -s ' ' '\n' |
+        grep -E '^analysis.*[.]sql$' |
+        tr -s '\n' ' ')
+        )"
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-southeast-2
+        role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+        # role-external-id: ${{ secrets.AWS_ROLE_EXTERNAL_ID }}
+        role-duration-seconds: 1200
+        role-session-name: MySessionName
+
+    - name: Get the last manifest.json from s3
+      run: |
+        aws s3 cp s3://dbt-tutorial-sf/prod/manifest/manifest.json ./target/last_manifest/manifest.json 
+
+    - name: Lint dbt models
+      shell: bash -l {0}
+      if: steps.get_files_to_lint.outputs.lintees != ''
+      run: |
+        export DBT_PROFILE_SCHEMA=pr_$(date +%s)
+        sqlfluff lint ${{ steps.get_files_to_lint.outputs.lintees }}

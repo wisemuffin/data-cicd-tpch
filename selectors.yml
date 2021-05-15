@@ -1,0 +1,27 @@
+selectors:
+  - name: "standard_schedule"
+    definition: "tag:standard_schedule"
+  - name: "late_schedule"
+    definition: "tag:late_schedule"
+  - name: "hourly_schedule"
+    definition: "tag:hourly_schedule"
+  - name: nightly_diet_snowplow
+    description: "Non-incremental Snowplow models that power nightly exports"
+    definition:
+      union:
+        - intersection:
+            - method: source
+              value: snowplow
+              childrens_parents: true
+            - method: tag
+              value: nightly
+        - method: path
+          value: models/export
+        - exclude:
+            - intersection:
+                - method: package
+                  value: snowplow
+                - method: config.materialized
+                  value: incremental
+            - method: fqn
+              value: export_performance_timing

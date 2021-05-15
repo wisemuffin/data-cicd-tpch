@@ -1,0 +1,85 @@
+name: Lint from a PR (only diff)
+
+# on: pull_request
+
+env:
+  DBT_PROFILE_TARGET:            test
+
+jobs:
+  lint_for_diffs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout PR by removing the merge into main
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+        # ref: ${{ github.event.pull_request.head.sha }}
+    
+    # - name: git branch temp setup
+    #   run: |
+    #     git config --global user.email "temp_branch@example.com"
+    #     git config --global user.name "temp_branch"
+    #     git checkout -b temp
+    #     git add .
+    #     git commit -am "temp branch of pr"
+
+    - name: git branch temp setup
+      run: |
+        git branch
+
+    - name: Dump GitHub context
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
+      run: |
+        echo "$GITHUB_CONTEXT"
+        echo ${{ github.event.pull_request.title }}
+
+    - name: event info
+      run: |
+        jq . $GITHUB_EVENT_PATH
+
+    - name: fetch main branch for sqlfluff to compare
+      run: |
+        git fetch origin main:main  
+        git branch
+        git log -20
+
+    # - name: DELETE this step
+    #   run: |
+    #     git checkout main  
+    #     git branch
+    #     git log -20
+
+    - name: Install Python 3.7
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.7
+
+    - name: Install python packages
+      run: |
+        python -m pip install --upgrade pip
+        pip install dbt
+        pip install sqlfluff
+
+    - name: Lint SQL
+      run: |
+        diff-quality --violations sqlfluff --compare-branch main
+
+    - name: check pr
+      run: |
+        cat ./models/marts/core/fct_orders.sql
+
+    - name: check pr status
+      run: |
+        git status
+        git add .
+    
+    - name: Lint SQL 2
+      run: |
+        diff-quality --violations sqlfluff --compare-branch main
+    
+    - name: check main
+      run: |
+        git checkout main
+        cat ./models/marts/core/fct_orders.sql

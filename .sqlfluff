@@ -1,0 +1,10 @@
+[sqlfluff]
+templater = dbt
+# dbt templating does not keep trailing new lines (L009)
+exclude_rules = L009
+
+[sqlfluff:rules]
+tab_space_size = 4
+
+[sqlfluff:rules:L010]
+capitalisation_policy = lower
