@@ -43,7 +43,11 @@ models:
             description: pre-discount total of all ordered items
             tests:
                 - not_null
-                
+          - name: dummy_amount
+            description: a temporary dummy ammount for testing out CICD
+            tests:
+                - not_null
+
           - name: item_discount_amount
             description: discount amount for the order
             tests:

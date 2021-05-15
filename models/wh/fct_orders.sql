@@ -40,7 +40,7 @@ final as (
         1 as order_count,                
         case when s.gross_item_sales_amount > 30000 then 0
             else s.gross_item_sales_amount end as gross_item_sales_amount,
-        1 as dumby_amount,
+        1 as dummy_amount,
         s.item_discount_amount,
         s.item_tax_amount,
         s.net_item_sales_amount
