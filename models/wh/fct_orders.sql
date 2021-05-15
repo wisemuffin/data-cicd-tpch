@@ -37,8 +37,9 @@ final as (
         o.order_clerk_name,
         o.shipping_priority,
                 
-        1 + 2 as order_count,                
-        s.gross_item_sales_amount,
+        1 as order_count,                
+        case when s.gross_item_sales_amount > 30000 then 0
+            else s.gross_item_sales_amount as item_sales_amount,
         s.item_discount_amount,
         s.item_tax_amount,
         s.net_item_sales_amount
@@ -47,7 +48,7 @@ final as (
         join
         order_item_summary s
             on o.order_key = s.order_key
-    where s.gross_item_sales_amount > 30
+    where s.gross_item_sales_amount > 10000
 )
 select 
     f.*,
