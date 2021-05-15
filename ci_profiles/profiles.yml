@@ -2,7 +2,7 @@
 # For more information on how to configure this file, please see:
 # https://docs.getdbt.com/docs/profile
 
-jaffle_shop:
+tpch_cicd:
   target: "{{ env_var('DBT_PROFILE_TARGET') }}"
 
   outputs: # test and prod are identical, but their target names has significance in different build stages
