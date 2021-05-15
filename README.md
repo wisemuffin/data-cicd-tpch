@@ -21,6 +21,14 @@ Key to this is isolating every change (each feature/branch) against production d
 - Find the right data asset for the problem - data catalogue
 - Reduce barriers to entry for changing data models. By providing guardrails such as testing, linting, and code review I can provide safety nets for devlopers/analysts to contribute code changes.
 
+## Data model TPC-H
+
+The [TPC-H](https://docs.snowflake.com/en/user-guide/sample-data-tpch.html) is a sample dataset that ships as a shared database with Snowflake.
+
+There are also *1 *10 *100 and *1k variants.
+
+Thanks to Claus Herther who created the [DBT model](https://github.com/clausherther/dbt-tpch) for TPC-H. I have added the CICD and ported over to the latest version of DBT.
+
 ## Standardizes code patterns - DBT
 
 - Lower barrier for new users to start contributing.
