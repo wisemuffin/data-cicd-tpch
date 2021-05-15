@@ -27,7 +27,7 @@ order_item_summary as (
 ),
 final as (
 
-    select 
+    SELECT 
 
         o.order_key, 
         o.order_date,
@@ -37,7 +37,7 @@ final as (
         o.order_clerk_name,
         o.shipping_priority,
                 
-        1 as order_count,                
+        1 + 1 as order_count,                
         s.gross_item_sales_amount,
         s.item_discount_amount,
         s.item_tax_amount,
@@ -47,6 +47,7 @@ final as (
         join
         order_item_summary s
             on o.order_key = s.order_key
+    where s.gross_item_sales_amount > 30
 )
 select 
     f.*,
