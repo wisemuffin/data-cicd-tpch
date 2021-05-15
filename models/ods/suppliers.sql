@@ -10,7 +10,7 @@ with suppliers as (
 )
 select 
     s.supplier_key,
-    s.supplier_name,
+    s.supplier_name || '_dave' as supplier_name,
     s.supplier_address,
     s.nation_key,
     s.supplier_phone_number,
