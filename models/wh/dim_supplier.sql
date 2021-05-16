@@ -8,40 +8,41 @@ with suppliers as (
     select * from {{ ref('suppliers') }}
 
 ),
+
 nations as (
 
     select * from {{ ref('nations') }}
 ),
+
 regions as (
 
     select * from {{ ref('regions') }}
 
 ),
+
 final as (
 
-    select 
-        s.supplier_key,
-        s.supplier_name,
-        s.supplier_address,
-        n.nation_key as supplier_nation_key,
-        n.nation_name as supplier_nation_name,
-        r.region_key as supplier_region_key,
-        r.region_name as supplier_region_name,
-        s.supplier_phone_number,
-        s.supplier_account_balance
-    from
-        suppliers s
-        join
-        nations n
-            on s.nation_key = n.nation_key
-        join
-        regions r
-            on n.region_key = r.region_key
+    select
+        suppliers.supplier_key,
+        suppliers.supplier_name,
+        suppliers.supplier_address,
+        nations.nation_key as supplier_nation_key,
+        nations.nation_name as supplier_nation_name,
+        regions.region_key as supplier_region_key,
+        regions.region_name as supplier_region_name,
+        suppliers.supplier_phone_number,
+        suppliers.supplier_account_balance
+    from suppliers
+    join nations
+        on suppliers.nation_key = nations.nation_key
+    join regions
+        on nations.region_key = regions.region_key
 )
-select 
-    f.*,
+
+select
+    final.*,
     {{ dbt_housekeeping() }}
 from
-    final f
+    final
 order by
-    f.supplier_key
+    final.supplier_key

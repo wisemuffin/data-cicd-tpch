@@ -8,10 +8,11 @@ with regions as (
     select * from {{ ref('base_region') }}
 
 )
-select 
-    r.region_key,
-    r.region_name
+
+select
+    regions.region_key,
+    regions.region_name
 from
-    regions r
+    regions
 order by
-    r.region_key
+    regions.region_key

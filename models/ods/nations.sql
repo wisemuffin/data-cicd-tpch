@@ -8,11 +8,12 @@ with nations as (
     select * from {{ ref('base_nation') }}
 
 )
-select 
-    n.nation_key,
-    n.nation_name,
-    n.region_key
+
+select
+    nation_key,
+    nation_name,
+    region_key
 from
-    nations n
+    nations
 order by
-    n.nation_key
+    nation_key

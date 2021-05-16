@@ -9,7 +9,7 @@ Per TPC-H Spec:
 2.4.1 Pricing Summary Report Query (Q1)
 */
 
-select 
+select
     f.return_status_code,
     f.order_line_status_code,
     sum(f.quantity) as quantity,

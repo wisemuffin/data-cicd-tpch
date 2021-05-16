@@ -8,14 +8,15 @@ with suppliers as (
     select * from {{ ref('base_supplier') }}
 
 )
-select 
-    s.supplier_key,
-    s.supplier_name,
-    s.supplier_address,
-    s.nation_key,
-    s.supplier_phone_number,
-    s.supplier_account_balance
+
+select
+    suppliers.supplier_key,
+    suppliers.supplier_name,
+    suppliers.supplier_address,
+    suppliers.nation_key,
+    suppliers.supplier_phone_number,
+    suppliers.supplier_account_balance
 from
-    suppliers s
+    suppliers
 order by
-    s.supplier_key
+    suppliers.supplier_key
