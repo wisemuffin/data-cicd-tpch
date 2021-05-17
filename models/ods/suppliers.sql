@@ -11,7 +11,7 @@ with suppliers as (
 
 select
     suppliers.supplier_key,
-    suppliers.supplier_name,
+    suppliers.supplier_name || '_davegg' as supplier_name,
     suppliers.supplier_address,
     suppliers.nation_key,
     suppliers.supplier_phone_number,
