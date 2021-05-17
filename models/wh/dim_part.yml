@@ -1,0 +1,9 @@
+version: 2
+
+models:
+
+    - name: dim_part
+      columns:
+          - name: part_key
+            tags:
+              - pk_tag

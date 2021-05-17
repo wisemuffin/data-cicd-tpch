@@ -1,0 +1,9 @@
+version: 2
+
+models:
+
+    - name: order_item_key
+      columns:
+          - name: order_line_number
+            tags:
+              - pk_tag

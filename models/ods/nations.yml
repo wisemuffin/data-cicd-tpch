@@ -1,0 +1,9 @@
+version: 2
+
+models:
+
+    - name: nations
+      columns:
+          - name: nation_key
+            tags:
+              - pk_tag

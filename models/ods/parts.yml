@@ -1,0 +1,9 @@
+version: 2
+
+models:
+
+    - name: parts
+      columns:
+          - name: part_key
+            tags:
+              - pk_tag
