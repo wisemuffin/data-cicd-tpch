@@ -82,13 +82,6 @@ jobs:
     - name: Get the last manifest.json from s3
       run: |
         aws s3 cp s3://dbt-tutorial-sf/prod/manifest/manifest.json ./target/last_manifest/manifest.json 
-    
-    - name: check sqlfluff
-      shell: bash -l {0}
-      run: |
-        dbt --help
-        dbt compile
-        cat ./target/compiled/DBT_TPCH_CICD/models/ods/suppliers.sql
 
     - name: Lint dbt models
       shell: bash -l {0}
