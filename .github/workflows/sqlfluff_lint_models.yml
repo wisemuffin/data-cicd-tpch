@@ -85,8 +85,9 @@ jobs:
     
     - name: check sqlfluff
       run: |
+        dbt --help
         dbt compile
-        cat ./target/models/ods/suppliers.sql
+        cat ./target/compiled/DBT_TPCH_CICD/models/ods/suppliers.sql
 
     - name: Lint dbt models
       shell: bash -l {0}
