@@ -7,4 +7,4 @@ exclude_rules = L009
 tab_space_size = 4
 
 [sqlfluff:rules:L010]
-capitalisation_policy = lower
+extended_capitalisation_policy = lower
