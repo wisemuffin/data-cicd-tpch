@@ -1,0 +1,9 @@
+version: 2
+
+models:
+
+    - name: suppliers
+      columns:
+          - name: supplier_key
+            tags:
+              - pk_tag

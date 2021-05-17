@@ -5,6 +5,8 @@ models:
     - name: fct_orders_items
       columns:
           - name: order_item_key
+            tags:
+              - pk_tag
             description: unique key for each order item
             tests:
                 - unique

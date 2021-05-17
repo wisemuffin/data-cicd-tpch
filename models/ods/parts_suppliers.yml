@@ -1,0 +1,9 @@
+version: 2
+
+models:
+
+    - name: parts_suppliers
+      columns:
+          - name: part_supplier_key
+            tags:
+              - pk_tag

@@ -1,0 +1,9 @@
+version: 2
+
+models:
+
+    - name: customers
+      columns:
+          - name: customer_key
+            tags:
+              - pk_tag

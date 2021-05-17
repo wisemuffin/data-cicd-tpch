@@ -1,0 +1,9 @@
+version: 2
+
+models:
+
+    - name: regions
+      columns:
+          - name: region_key
+            tags:
+              - pk_tag

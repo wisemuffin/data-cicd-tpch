@@ -1,0 +1,9 @@
+version: 2
+
+models:
+
+    - name: dim_part_supplier_xrf
+      columns:
+          - name: part_supplier_key
+            tags:
+              - pk_tag
