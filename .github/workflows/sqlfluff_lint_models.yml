@@ -85,6 +85,7 @@ jobs:
     
     - name: check sqlfluff
       run: |
+        dbt compile
         cat ./target/models/ods/suppliers.sql
 
     - name: Lint dbt models
