@@ -10,7 +10,7 @@ with orders as (
 )
 
 select
-    order_key, 
+    order_key,
     order_date,
     customer_key,
     order_status_code,

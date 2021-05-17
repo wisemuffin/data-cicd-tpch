@@ -10,7 +10,7 @@ with suppliers as (
 ),
 
 parts as (
-    
+
     select * from {{ ref('parts') }}
 
 ),
@@ -48,15 +48,17 @@ final as (
 
         suppliers.supplier_key,
         suppliers.supplier_name,
-        supplier_address,
+        suppliers.supplier_address,
         suppliers.supplier_phone_number,
         suppliers.supplier_account_balance,
-        nations.nation_key as supplier_nation_key, nationnation_name as supplier_nation_name, regionregion_key as supplier_region_key,
+        nations.nation_key as supplier_nation_key,
+        nations.nation_name as supplier_nation_name,
+        regions.region_key as supplier_region_key,
         regions.region_name as supplier_region_name,
 
         parts_suppliers.supplier_availabe_quantity,
         parts_suppliers.supplier_cost_amount
-    from parts p
+    from parts
     join parts_suppliers
         on parts.part_key = parts_suppliers.part_key
     join suppliers

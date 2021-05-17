@@ -2,3 +2,4 @@ target/
 dbt_modules/
 macros/
 snowflake_setup/
+utils/

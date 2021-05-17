@@ -4,13 +4,13 @@
     )
 }}
 with orders_items as (
-    
+
     select * from {{ ref('orders_items') }}
 
 ),
 
 parts_suppliers as (
-    
+
     select * from {{ ref('parts_suppliers') }}
 
 ),
@@ -23,7 +23,7 @@ final as (
         orders_items.order_date,
         orders_items.customer_key,
         orders_items.order_status_code,
-        
+
         orders_items.part_key,
         orders_items.supplier_key,
         orders_items.return_status_code,
@@ -39,7 +39,7 @@ final as (
         orders_items.discount_percentage,
         orders_items.discounted_price,
         orders_items.tax_rate,
-        
+
         1 as order_item_count,
         orders_items.quantity,
 
@@ -51,10 +51,10 @@ final as (
 
     from orders_items
     join parts_suppliers
-        on orders_items.part_key = parts_suppliers.part_key and
-            orders_items.supplier_key = parts_suppliers.supplier_key
+        on orders_items.part_key = parts_suppliers.part_key
+            and orders_items.supplier_key = parts_suppliers.supplier_key
 )
-select 
+select
     final.*,
     {{ dbt_housekeeping() }}
 from
