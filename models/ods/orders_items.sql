@@ -8,54 +8,60 @@ with orders as (
     select * from {{ ref('base_orders') }}
 
 ),
+
 line_items as (
 
     select * from {{ ref('base_line_item') }}
 
 )
-select 
 
-    {{ dbt_utils.surrogate_key(['o.order_key', 'l.order_line_number']) }} as order_item_key,
+select
 
-    o.order_key,
-    o.order_date,
-    o.customer_key,
-    o.order_status_code,
-    
-    l.part_key,
-    l.supplier_key,
-    l.return_status_code,
-    l.order_line_number,
-    l.order_line_status_code,
-    l.ship_date,
-    l.commit_date,
-    l.receipt_date,
-    l.ship_mode_name,
+    orders.order_key,
+    orders.order_date,
+    orders.customer_key,
+    orders.order_status_code,
 
-    l.quantity,
-    
+    line_items.part_key,
+    line_items.supplier_key,
+    line_items.return_status_code,
+    line_items.order_line_number,
+    line_items.order_line_status_code,
+    line_items.ship_date,
+    line_items.commit_date,
+    line_items.receipt_date,
+    line_items.ship_mode_name,
+    line_items.quantity,
+
     -- extended_price is actually the line item total,
     -- so we back out the extended price per item
-    (l.extended_price/nullif(l.quantity, 0)){{ money() }} as base_price,
-    l.discount_percentage,
-    (base_price * (1 - l.discount_percentage)){{ money() }} as discounted_price,
+    line_items.extended_price as gross_item_sales_amount,
+    line_items.discount_percentage,
+    line_items.tax_rate,
 
-    l.extended_price as gross_item_sales_amount,
-    (l.extended_price * (1 - l.discount_percentage)){{ money() }} as discounted_item_sales_amount,
+    (line_items.extended_price
+        / nullif(line_items.quantity, 0)){{ money() }} as base_price,
+    (base_price * (1 - line_items.discount_percentage))
+        {{ money() }} as discounted_price,
+
+    (line_items.extended_price
+        * (1 - line_items.discount_percentage)){{ money() }}
+    as discounted_item_sales_amount,
     -- We model discounts as negative amounts
-    (-1 * l.extended_price * l.discount_percentage){{ money() }} as item_discount_amount,
-    l.tax_rate,
-    ((gross_item_sales_amount + item_discount_amount) * l.tax_rate){{ money() }} as item_tax_amount,
-    (
-        gross_item_sales_amount + 
-        item_discount_amount + 
-        item_tax_amount
-    ){{ money() }} as net_item_sales_amount
+    (-1 * line_items.extended_price
+        * line_items.discount_percentage){{ money() }}
+    as item_discount_amount,
+    ((gross_item_sales_amount + item_discount_amount)
+        * line_items.tax_rate){{ money() }} as item_tax_amount,
+    (gross_item_sales_amount
+        + item_discount_amount
+        + item_tax_amount
+    ){{ money() }} as net_item_sales_amount,
 
-from
-    orders o
-    join
-    line_items l
-        on o.order_key = l.order_key
+    {{ dbt_utils.surrogate_key(['orders.order_key', 'line_items.order_line_number']) }} as order_item_key
+
+from orders
+join line_items
+    on orders.order_key = line_items.order_key
 order by
-    o.order_date
+    orders.order_date

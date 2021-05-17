@@ -16,6 +16,6 @@ select
     s.supplier_phone_number,
     s.supplier_account_balance
 from
-    suppliers s
+    suppliers
 order by
-    s.supplier_key
+    suppliers.supplier_key

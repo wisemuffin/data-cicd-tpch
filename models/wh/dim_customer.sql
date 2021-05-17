@@ -8,40 +8,41 @@ with customers as (
     select * from {{ ref('customers') }}
 
 ),
+
 nations as (
 
     select * from {{ ref('nations') }}
 ),
+
 regions as (
 
     select * from {{ ref('regions') }}
 
 ),
+
 final as (
-    select 
-        c.customer_key,
-        c.customer_name,
-        c.customer_address,
-        n.nation_key as customer_nation_key,
-        n.nation_name as customer_nation_name,
-        r.region_key as customer_region_key,
-        r.region_name as customer_region_name,
-        c.customer_phone_number,
-        c.customer_account_balance,
-        c.customer_market_segment_name
-    from
-        customers c
-        join
-        nations n
-            on c.nation_key = n.nation_key
-        join
-        regions r
-            on n.region_key = r.region_key
+    select
+        customers.customer_key,
+        customers.customer_name,
+        customers.customer_address,
+        nations.nation_key as customer_nation_key,
+        nations.nation_name as customer_nation_name,
+        regions.region_key as customer_region_key,
+        regions.region_name as customer_region_name,
+        customers.customer_phone_number,
+        customers.customer_account_balance,
+        customers.customer_market_segment_name
+    from customers
+    join nations
+        on customers.nation_key = nations.nation_key
+    join regions
+        on nations.region_key = regions.region_key
 )
-select 
-    f.*,
+
+select
+    final.*,
     {{ dbt_housekeeping() }}
 from
-    final f
+    final
 order by
-    f.customer_key
+    final.customer_key
