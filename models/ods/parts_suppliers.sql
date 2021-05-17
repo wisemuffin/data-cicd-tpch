@@ -39,7 +39,7 @@ select
     part_suppliers.supplier_availabe_quantity,
     part_suppliers.supplier_cost_amount,
 
-    {{ dbt_utils.surrogate_key(['parts.part_key', 's.supplier_key']) }} as part_supplier_key
+    {{ dbt_utils.surrogate_key(['parts.part_key', 'part_suppliers.supplier_key']) }} as part_supplier_key
 
 from parts
 join part_suppliers
