@@ -9,12 +9,12 @@ with suppliers as (
 
 )
 select 
-    s.supplier_key,
-    s.supplier_name || 'davegggg' as supplier_name,
-    s.supplier_address,
-    s.nation_key,
-    s.supplier_phone_number,
-    s.supplier_account_balance
+    suppliers.supplier_key,
+    suppliers.supplier_name || 'davegggg' as supplier_name,
+    suppliers.supplier_address,
+    suppliers.nation_key,
+    suppliers.supplier_phone_number,
+    suppliers.supplier_account_balance
 from
     suppliers
 order by
