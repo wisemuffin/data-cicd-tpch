@@ -15,7 +15,8 @@ select
     suppliers.supplier_address,
     suppliers.nation_key,
     suppliers.supplier_phone_number,
-    suppliers.supplier_account_balance
+    suppliers.supplier_account_balance,
+    suppliers.supplier_name || '_dave' as supplier_name_dave
 from
     suppliers
 order by
