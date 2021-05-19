@@ -45,7 +45,8 @@ final as (
         order_item_summary.item_tax_amount,
         case when orders.order_priority_code = '2-HIGH' then 0
             else order_item_summary.net_item_sales_amount end
-        as net_item_sales_amount
+        as net_item_sales_amount,
+        0 as new_column
     from orders
     join order_item_summary
         on orders.order_key = order_item_summary.order_key
@@ -56,6 +57,6 @@ SELECT
     {{ dbt_housekeeping() }}
 from
     final
-where gross_item_sales_amount > 30
 order by
     final.order_date
+limit 1000
