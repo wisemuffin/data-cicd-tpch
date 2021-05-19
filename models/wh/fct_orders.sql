@@ -43,8 +43,8 @@ final as (
         order_item_summary.gross_item_sales_amount,
         order_item_summary.item_discount_amount,
         order_item_summary.item_tax_amount,
-        case when orders.order_priority_code = '2-HIGH' then 1 
-            else order_item_summary.net_item_sales_amount 
+        case when orders.order_priority_code = '2-HIGH' then null 
+            else order_item_summary.net_item_sales_amount end
         as net_item_sales_amount
     from orders
     join order_item_summary
