@@ -43,16 +43,17 @@ final as (
         order_item_summary.gross_item_sales_amount,
         order_item_summary.item_discount_amount,
         order_item_summary.item_tax_amount,
-        order_item_summary.net_item_sales_amount
+        order_item_summary.net_item_sales_amount + 10 net_item_sales_amount
     from orders
     join order_item_summary
         on orders.order_key = order_item_summary.order_key
 )
 
-select
+SELECT  
     final.*,
     {{ dbt_housekeeping() }}
 from
     final
+where gross_item_sales_amount > 30
 order by
     final.order_date
