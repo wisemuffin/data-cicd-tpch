@@ -154,3 +154,16 @@ PR_HEAD_SHA=$(cat $GITHUB_EVENT_PATH | jq -r .pull_request.head.sha)
 ## Data Orchestration
 
 See [airflow-dbt](https://github.com/wisemuffin/airflow-dbt)
+
+
+# Tips and Tricks
+
+- Using dbt power user vs code can get autocomplete on dbt_utils just type 
+
+```sql
+{% dbt_utils.
+```
+- dbt power user also does autocomplete for jinja e.g. type
+```sql
+macro
+```
