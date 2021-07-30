@@ -43,6 +43,7 @@ final as (
         order_item_summary.gross_item_sales_amount,
         order_item_summary.item_discount_amount,
         order_item_summary.item_tax_amount,
+        1 as dave_count,
         order_item_summary.net_item_sales_amount
     from orders
     join order_item_summary
