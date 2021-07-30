@@ -78,7 +78,7 @@ jobs:
     - name: Install python packages
       run: |
         python -m pip install --upgrade pip
-        pip install dbt
+        pip install dbt==0.19.1
         pip install sqlfluff==0.4.0
 
     - name: Lint SQL
