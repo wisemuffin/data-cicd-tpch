@@ -16,10 +16,10 @@
 - start a free trial with snowflake
 - [setup your AWS account's s3 with snowflake](https://docs.snowflake.com/en/user-guide/data-load-s3-config-storage-integration.html)
 - to get some sample raw data
-    - run ./access_controls/raw_base.sql (update IAM role)
-    - ./access_controls/raw/*.sql
-    - ./ddl/raw/*.sql
-- then setup jaffle shop
+    - run ./access_controls/tpch_base.sql (update IAM role)
+    - ./access_controls/raw/*.sql (only for jaffle shop not required for tpch)
+    - ./ddl/raw/*.sql (only for jaffle shop not required for tpch)
+- then setup jaffle shop (only for jaffle shop not required for tpch)
     - ./access_controls/jaffle_shop_base.sql
     - ./access_controls/service_accounts/*.sql
 
