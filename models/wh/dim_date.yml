@@ -2,7 +2,7 @@ version: 2
 
 models:
     - name: dim_date
-        description: '{{ doc("dim_date") }}'
+        # description: '{{ doc("dim_date") }}'
         columns:
           - name: date_id
             tests:
