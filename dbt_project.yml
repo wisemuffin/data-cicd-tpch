@@ -31,6 +31,8 @@ vars:
       
 models:
   DBT_TPCH_CICD:
+    source:
+      schema: source
     base:
       schema: base
     ods:
