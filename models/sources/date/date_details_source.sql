@@ -1,9 +1,9 @@
 WITH date_spine AS (
 
   {{ dbt_utils.date_spine(
-      start_date="to_date('11/01/2009', 'mm/dd/yyyy')",
+      start_date="to_date('01/01/1990', 'mm/dd/yyyy')",
       datepart="day",
-      end_date="dateadd(year, 40, current_date)"
+      end_date="dateadd(year, 0, current_date)"
      )
   }}
 
