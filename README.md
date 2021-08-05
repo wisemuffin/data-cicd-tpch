@@ -40,6 +40,52 @@ Data build tool [DBT](https://www.getdbt.com/) comes with some awesome features 
 - [DBT generated documentation](http://dbt-tutorial-sf.s3-website-ap-southeast-2.amazonaws.com/#!/overview) for this project are hosted on S3. This includes data lineage.
 - Using [DBT's 'slim' CI](https://docs.getdbt.com/docs/guides/best-practices#run-only-modified-models-to-test-changes-slim-ci) best practice we can identify only the models that have changed.
 
+## Local Development
+### Set up DBT locally
+dbt has issues when installed via pipenv
+```bash
+cd <this repo cloned dir>
+python3 -m venv venv
+source venv/bin/activate
+pip3 install -r requirements/txt
+```
+
+### Setup your default profile
+```bash
+mkdir ~/.dbt/profiles.yml
+```
+
+then enter the following config:
+
+```yaml
+default:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: <your account>.ap-southeast-2
+
+      # User/password auth
+      user: <your user>
+      password: <your pw>
+
+      role: SYSADMIN
+      database: DBT_FUNDAMENTALS
+      warehouse: COMPUTE_WH
+      schema: JAFFEL_SHOP
+      threads: 4
+      client_session_keep_alive: False
+      query_tag: dbtcli
+```
+
+Then you can connect and run you development work with:
+
+```bash
+dbt seed
+dbt test --store-failures
+dbt run
+```
+
 
 ## DBT slim CICD with github actions
 
