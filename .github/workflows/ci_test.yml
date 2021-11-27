@@ -8,7 +8,7 @@ env:
   DBT_PROFILE_USER:              ${{ secrets.DBT_PROFILE_TEST_USER }}
   DBT_PROFILE_PASSWORD:          ${{ secrets.DBT_PROFILE_TEST_PASSWORD }}
   DBT_PROFILE_ROLE:              ANALYTICS_TPCH_DEV_ADMIN
-  DBT_PROFILE_DB:                ANALYTICS_TPCH_DE
+  DBT_PROFILE_DB:                ANALYTICS_TPCH_DEV
   DBT_PROFILE_WH:                PROCESSING_WH
 
 jobs:
