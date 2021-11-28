@@ -17,7 +17,8 @@ select
     parts.part_type_name,
     parts.part_size,
     parts.part_container_desc,
-    parts.retail_price
+    parts.retail_price,
+    null as dumby_column
 from
     parts
 order by
