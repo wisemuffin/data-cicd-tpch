@@ -25,14 +25,22 @@
         (zuora, dev, preparation) = zuora
 
     #}
+    {%- if target.name in production_targets -%}
 
-    {%- if custom_schema_name is none -%}
 
-        {{ target.schema.lower() | trim }}
+        {%- if custom_schema_name is none -%}
 
+            {{ target.schema.lower() | trim }}
+
+        {%- else -%}
+
+            {{ custom_schema_name.lower() | trim }}
+
+        {%- endif -%}
+    
     {%- else -%}
 
-        {{ custom_schema_name.lower() | trim }}
+    {{ target.schema.lower() | trim }}
 
     {%- endif -%}
     
