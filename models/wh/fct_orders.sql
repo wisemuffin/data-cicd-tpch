@@ -40,7 +40,6 @@ final as (
         orders.shipping_priority,
 
         1 as order_count,
-        0 as test,
         order_item_summary.gross_item_sales_amount,
         order_item_summary.item_discount_amount,
         order_item_summary.item_tax_amount,
