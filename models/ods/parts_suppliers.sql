@@ -17,7 +17,7 @@ suppliers as (
 
 part_suppliers as (
 
-    select * from {{ ref('base_part_supplier') }}
+    select * from {{ ref('stg_part_supplier') }}
 
 )
 

@@ -5,7 +5,7 @@
 }}
 with customers as (
 
-    select * from {{ ref('base_customer') }}
+    select * from {{ ref('stg_customer') }}
 
 )
 

@@ -90,7 +90,7 @@ models:
             tests:
                 - not_null
 
-          - name: base_price
+          - name: stg_price
             description: item price before discount 
             tests:
                 - not_null
