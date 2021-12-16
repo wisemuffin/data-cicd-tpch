@@ -38,8 +38,8 @@ final as (
         orders.order_priority_code,
         orders.order_clerk_name,
         orders.shipping_priority,
-
         1 as order_count,
+        2 as test_no,
         0 as test_cicd_4,
         order_item_summary.gross_item_sales_amount,
         order_item_summary.item_discount_amount,
