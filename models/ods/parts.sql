@@ -10,6 +10,7 @@ with parts as (
 )
 
 select
+    1 as test_part,
     parts.part_key,
     parts.part_name,
     parts.part_manufacturer_name,

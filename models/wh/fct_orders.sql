@@ -38,9 +38,9 @@ final as (
         orders.order_priority_code,
         orders.order_clerk_name,
         orders.shipping_priority,
-
         1 as order_count,
-        4 as test_cicd_4,
+        'order status: '|| orders.order_status_code ||' - sales amount: '||order_item_summary.net_item_sales_amount as item_summary,
+        order_item_summary.gross_item_sales_amount - order_item_summary.item_discount_amount - order_item_summary.item_tax_amount as net_check_amount,
         order_item_summary.gross_item_sales_amount,
         order_item_summary.item_discount_amount,
         order_item_summary.item_tax_amount,
