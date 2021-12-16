@@ -41,6 +41,7 @@ final as (
         1 as order_count,
         2 as test_no,
         0 as test_cicd_4,
+        order_item_summary.gross_item_sales_amount - order_item_summary.item_discount_amount - order_item_summary.item_tax_amount as net_check_amount,
         order_item_summary.gross_item_sales_amount,
         order_item_summary.item_discount_amount,
         order_item_summary.item_tax_amount,
