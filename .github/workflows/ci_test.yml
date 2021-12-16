@@ -71,8 +71,12 @@ jobs:
     - name: Datafold dbt upload check manifest
       run: |
         echo $DATAFOLD_APIKEY
-        ls ./target
-        cat ./target/manifest.json
+
+    # - name: Datafold dbt upload check manifest
+    #   run: |
+    #     echo $DATAFOLD_APIKEY
+    #     ls ./target
+    #     cat ./target/manifest.json
 
     - name: Datafold dbt upload check run_results.json
       run: |
