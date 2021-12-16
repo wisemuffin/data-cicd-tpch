@@ -1,6 +1,6 @@
 
 target/
-dbt_modules/
+dbt_packages/
 logs/
 dbt_dags/data/
 
