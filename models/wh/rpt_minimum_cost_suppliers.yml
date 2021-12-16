@@ -1,0 +1,11 @@
+version: 2
+
+models:
+
+    - name: rpt_minimum_cost_suppliers
+      columns:
+          - name: part_supplier_key
+            tags:
+              - pk_tag
+            
+                

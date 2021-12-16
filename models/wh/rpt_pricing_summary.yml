@@ -1,0 +1,14 @@
+version: 2
+
+models:
+
+    - name: rpt_pricing_summary
+      columns:
+          - name: return_status_code
+            tags:
+              - pk_tag
+          - name: order_line_status_code
+            tags:
+              - pk_tag
+            
+                
