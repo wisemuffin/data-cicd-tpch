@@ -2,7 +2,7 @@ version: 2
 
 models:
 
-    - name: order_item_key
+    - name: order_items
       columns:
           - name: order_line_number
             tags:

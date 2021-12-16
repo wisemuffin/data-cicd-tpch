@@ -5,13 +5,13 @@
 }}
 with orders as (
     
-    select * from {{ ref('base_orders') }}
+    select * from {{ ref('stg_orders') }}
 
 ),
 
 line_items as (
 
-    select * from {{ ref('base_line_item') }}
+    select * from {{ ref('stg_line_item') }}
 
 )
 
