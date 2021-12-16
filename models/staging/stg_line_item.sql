@@ -9,7 +9,7 @@ select
     l_suppkey as supplier_key,
     l_linenumber as order_line_number,
     l_quantity as quantity,
-    l_extendedprice{{ money() }} as extended_price,
+    (l_extendedprice+10){{ money() }} as extended_price,
     l_discount{{ money() }} as discount_percentage,
     l_tax{{ money() }} as tax_rate,
     l_returnflag as return_status_code,
