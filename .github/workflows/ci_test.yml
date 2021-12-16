@@ -71,8 +71,13 @@ jobs:
     - name: Datafold dbt upload check manifest
       run: |
         echo $DATAFOLD_APIKEY
-        ls ./target
-        cat ./target/manifest.json
+
+    # - name: Datafold dbt upload check manifest
+    #   run: |
+    #     echo $DATAFOLD_APIKEY
+    #     ls ./target
+    #     cat ./target/manifest.json
+
 
     - name: Datafold dbt upload check run_results.json
       run: |
@@ -83,10 +88,8 @@ jobs:
       run: |
           PR_HEAD_SHA=$(cat $GITHUB_EVENT_PATH | jq -r .pull_request.head.sha)
           echo $PR_HEAD_SHA $GITHUB_SHA
-          datafold dbt upload --ci-config-id 12 --run-type=pull_request \
-              --target-folder ./target \
+          datafold dbt upload --ci-config-id 40 --run-type pull_request \
+              --target-folder ./target/ \
               --commit-sha $PR_HEAD_SHA
       env:
         DATAFOLD_APIKEY: ${{ secrets.DATAFOLD_APIKEY }}
-  
-    

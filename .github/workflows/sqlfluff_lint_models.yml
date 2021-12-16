@@ -41,6 +41,7 @@ jobs:
     - name: dbt install deps
       shell: bash -l {0}
       run: |
+        export DBT_PROFILE_SCHEMA=pr_$(date +%s)
         dbt deps
 
     - name: Get changed files
