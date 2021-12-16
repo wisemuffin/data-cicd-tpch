@@ -57,7 +57,7 @@ jobs:
     
     - name: Datafold dbt upload
       run: |
-       datafold dbt upload --ci-config-id 12 --run-type production --target-folder ./target
+       datafold dbt upload --ci-config-id 40 --run-type production --target-folder ./target
 
 
         
