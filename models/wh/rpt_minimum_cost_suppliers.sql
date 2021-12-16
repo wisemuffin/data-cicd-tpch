@@ -12,6 +12,7 @@ Per TPC-H Spec:
 with parts_suppliers as (
 
     select
+        dim_part_supplier_xrf.part_supplier_key,
         dim_part_supplier_xrf.supplier_account_balance,
         dim_part_supplier_xrf.supplier_name,
         dim_part_supplier_xrf.supplier_nation_key,
