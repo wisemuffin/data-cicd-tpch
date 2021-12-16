@@ -40,8 +40,8 @@ select
     line_items.tax_rate,
 
     (line_items.extended_price
-        / nullif(line_items.quantity, 0)){{ money() }} as stg_price,
-    (stg_price * (1 - line_items.discount_percentage))
+        / nullif(line_items.quantity, 0)){{ money() }} as base_price,
+    (base_price * (1 - line_items.discount_percentage))
         {{ money() }} as discounted_price,
 
     (line_items.extended_price

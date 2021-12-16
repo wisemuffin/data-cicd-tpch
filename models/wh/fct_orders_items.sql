@@ -35,7 +35,7 @@ final as (
         orders_items.ship_mode_name,
         parts_suppliers.supplier_cost_amount,
         {# parts_suppliers.retail_price, #}
-        orders_items.stg_price,
+        orders_items.base_price,
         orders_items.discount_percentage,
         orders_items.discounted_price,
         orders_items.tax_rate,

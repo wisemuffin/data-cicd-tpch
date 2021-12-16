@@ -7,3 +7,5 @@ models:
           - name: order_line_number
             tags:
               - pk_tag
+            meta:
+              pk_tag: true
