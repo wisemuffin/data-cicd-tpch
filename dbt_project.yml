@@ -6,10 +6,10 @@ name: 'DBT_TPCH_CICD'
 version: '1.0.0'
 config-version: 2
 
-source-paths: ["models"]
+model-paths: ["models"]
 analysis-paths: ["analysis"] 
 test-paths: ["tests"]
-data-paths: ["data"]
+seed-paths: ["data"]
 macro-paths: ["macros"]
 
 target-path: "target"  # directory which will store compiled SQL files
