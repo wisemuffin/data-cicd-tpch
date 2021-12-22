@@ -202,6 +202,46 @@ PR_HEAD_SHA=$(cat $GITHUB_EVENT_PATH | jq -r .pull_request.head.sha)
 See [airflow-dbt](https://github.com/wisemuffin/airflow-dbt)
 
 
+# Testing
+
+## Regression testing 
+
+See datafold data diff.
+
+## Unit Testing
+
+### DBT's tests
+
+See example test in schema.yaml files
+
+### Unit Testing - expected results
+
+Brilliant explenaitions from Betsy Varghese:
+
+[unit-testing-in-dbt-part-1](https://servian.dev/unit-testing-in-dbt-part-1-d0cc20fd189a)
+[unit-testing for incremental models and snapshots](https://servian.dev/a-macro-ful-way-to-test-incremental-models-and-snapshots-2a8187919885)
+
+!Warning - you need to replace source() and ref() functions with source_for_test() and ref_for_test(). Additionally you need to set up a target for unit-test within your dbt profiles.
+
+
+First we load all our example data into a unit_test warehouse
+
+```bash
+dbt seed --target unit-test --select data/unit_test
+```
+
+Then we run the models with unit tests
+
+```bash
+dbt run --target unit-test --select +ods.orders_items
+```
+
+And then you can run your unit tests to comapre
+
+```bash
+dbt test --target unit-test --select ods.orders_items
+```
+
 # Tips and Tricks
 
 - Using dbt power user vs code can get autocomplete on dbt_utils just type 

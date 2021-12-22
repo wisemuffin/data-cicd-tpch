@@ -37,7 +37,7 @@ with parts_suppliers as (
             order by dim_part_supplier_xrf.supplier_account_balance desc)
         as supplier_rank
     from
-        {{ ref("dim_part_supplier_xrf") }}
+        {{ ref_for_test("dim_part_supplier_xrf") }}
 )
 
 select

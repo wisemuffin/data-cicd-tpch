@@ -188,7 +188,7 @@ Below is an example and the expected output:
 
     SELECT DISTINCT
       account_id
-    FROM {{ref('zuora_excluded_accounts')}}
+    FROM {{ref_for_test('zuora_excluded_accounts')}}
 
 )
 {% endraw %}

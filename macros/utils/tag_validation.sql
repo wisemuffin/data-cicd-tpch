@@ -26,7 +26,7 @@
 
         {% set query %}
             SELECT tag
-            FROM {{ref('valid_tags')}}
+            FROM {{ref_for_test('valid_tags')}}
         {% endset %}
         
         {% set results = run_query(query) %}

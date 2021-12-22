@@ -3,7 +3,7 @@
 WITH{% for cte_ref in tuple_list %} {{cte_ref[0]}} AS (
 
     SELECT * 
-    FROM {{ ref(cte_ref[1]) }}
+    FROM {{ ref_for_test(cte_ref[1]) }}
 
 )
     {%- if not loop.last -%}

@@ -5,7 +5,7 @@
 }}
 with orders as (
 
-    select * from {{ ref('stg_orders') }}
+    select * from {{ ref_for_test('stg_orders') }}
 
 )
 

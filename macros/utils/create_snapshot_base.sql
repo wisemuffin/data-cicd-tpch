@@ -4,7 +4,7 @@ WITH date_spine AS (
 
     SELECT DISTINCT
       DATE_TRUNC({{ date_part }}, date_day) AS date_actual
-    FROM {{ref("date_details")}}
+    FROM {{ref_for_test("date_details")}}
     WHERE date_day >= '{{ date_start }}'::DATE
       AND date_day <= CURRENT_DATE   
 

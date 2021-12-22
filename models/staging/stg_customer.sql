@@ -13,4 +13,4 @@ select
     c_mktsegment as customer_market_segment_name,
     c_comment as customer_comment
 from
-    {{ source('tpch', 'customer') }}
+    {{ source_for_test('tpch', 'customer') }}

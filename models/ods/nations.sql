@@ -5,7 +5,7 @@
 }}
 with nations as (
 
-    select * from {{ ref('stg_nation') }}
+    select * from {{ ref_for_test('stg_nation') }}
 
 )
 

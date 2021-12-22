@@ -9,4 +9,4 @@ select
     n_regionkey as region_key,
     n_comment as nation_comment
 from
-    {{ source('tpch', 'nation') }}
+    {{ source_for_test('tpch', 'nation') }}
