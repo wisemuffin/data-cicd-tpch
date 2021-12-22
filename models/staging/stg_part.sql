@@ -14,4 +14,4 @@ select
     p_retailprice as retail_price,
     p_comment as part_comment
 from
-    {{ source('tpch', 'part') }}
+    {{ source_for_test('tpch', 'part') }}

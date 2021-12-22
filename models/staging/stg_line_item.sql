@@ -21,4 +21,4 @@ select
     l_shipmode as ship_mode_name,
     l_comment as order_line_comment
 from
-    {{ source('tpch', 'lineitem') }}
+    {{ source_for_test('tpch', 'lineitem') }}

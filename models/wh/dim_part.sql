@@ -5,7 +5,7 @@
 }}
 with parts as (
 
-    select * from {{ ref('parts') }}
+    select * from {{ ref_for_test('parts') }}
 
 ),
 

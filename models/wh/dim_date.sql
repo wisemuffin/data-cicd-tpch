@@ -1,7 +1,7 @@
 WITH dates AS (
 
   SELECT *
-  FROM {{ ref('date_details') }}
+  FROM {{ ref_for_test('date_details') }}
 
 ), final AS (
 

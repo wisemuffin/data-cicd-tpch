@@ -5,18 +5,18 @@
 }}
 with customers as (
 
-    select * from {{ ref('customers') }}
+    select * from {{ ref_for_test('customers') }}
 
 ),
 
 nations as (
 
-    select * from {{ ref('nations') }}
+    select * from {{ ref_for_test('nations') }}
 ),
 
 regions as (
 
-    select * from {{ ref('regions') }}
+    select * from {{ ref_for_test('regions') }}
 
 ),
 

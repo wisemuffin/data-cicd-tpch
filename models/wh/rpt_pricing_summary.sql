@@ -25,7 +25,7 @@ select
     sum(fct_orders_items.order_item_count) as order_item_count
 
 from
-    {{ ref('fct_orders_items') }}
+    {{ ref_for_test('fct_orders_items') }}
 where fct_orders_items.ship_date
     <= {{ dbt_utils.dateadd('day', -90, var('max_ship_date')) }}
 group by 1, 2

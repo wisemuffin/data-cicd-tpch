@@ -5,19 +5,19 @@
 }}
 with parts as (
     
-    select * from {{ ref('parts') }}
+    select * from {{ ref_for_test('parts') }}
 
 ),
 
 suppliers as (
 
-    select * from {{ ref('suppliers') }}
+    select * from {{ ref_for_test('suppliers') }}
 
 ),
 
 part_suppliers as (
 
-    select * from {{ ref('stg_part_supplier') }}
+    select * from {{ ref_for_test('stg_part_supplier') }}
 
 )
 

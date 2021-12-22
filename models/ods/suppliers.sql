@@ -5,7 +5,7 @@
 }}
 with suppliers as (
 
-    select * from {{ ref('stg_supplier') }}
+    select * from {{ ref_for_test('stg_supplier') }}
 
 )
 

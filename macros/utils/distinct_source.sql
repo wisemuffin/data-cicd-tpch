@@ -1,4 +1,4 @@
-{%- macro distinct_source(source) -%}
+{%- macro distinct_source_for_test(source) -%}
 
 distinct_source AS (
 

@@ -5,13 +5,13 @@
 }}
 with orders as (
 
-    select * from {{ ref('orders') }}
+    select * from {{ ref_for_test('orders') }}
 
 ),
 
 orders_items as (
 
-    select * from {{ ref('orders_items') }}
+    select * from {{ ref_for_test('orders_items') }}
 
 ),
 

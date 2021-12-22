@@ -5,7 +5,7 @@
 }}
 with regions as (
 
-    select * from {{ ref('stg_region') }}
+    select * from {{ ref_for_test('stg_region') }}
 
 )
 
