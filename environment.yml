@@ -9,7 +9,7 @@ dependencies:
   - python=3.8
   - pip:
     - dbt-snowflake==1.0.0
-    - sqlfluff==0.9.0
-    - sqlfluff-templater-dbt==0.9.0
+    - sqlfluff==0.9.1
+    - sqlfluff-templater-dbt==0.9.1
     # Alternatively, to use latest SQLFluff updates from master. USE WITH CAUTION
     # - "git+https://github.com/sqlfluff/sqlfluff.git@master#egg=sqlfluff"
