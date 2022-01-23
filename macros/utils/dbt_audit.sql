@@ -1,5 +1,4 @@
 {%- macro dbt_audit(cte_ref, created_by, updated_by, created_date, updated_date) -%}
-
     SELECT
       *,
       '{{ created_by }}'::VARCHAR       AS created_by,
@@ -20,6 +19,7 @@
 
             {% if source_relation != None %}
 
+                
                 {% set min_created_date %}
                     SELECT LEAST(MIN(dbt_created_at), CURRENT_TIMESTAMP()) AS min_ts 
                     FROM {{ this }}
@@ -27,7 +27,10 @@
 
                 {% set results = run_query(min_created_date) %}
 
-                '{{results.columns[0].values()[0]}}'::TIMESTAMP AS dbt_created_at
+                -- '{{results.columns[0].values()[0]}}'::TIMESTAMP AS dbt_created_at
+                -- having issues with snowflake error 
+                -- column DBT_CREATED_AT from type TIMESTAMP_LTZ(9) to TIMESTAMP_NTZ(9)
+                CURRENT_TIMESTAMP() AS dbt_created_at
 
             {% else %}
 

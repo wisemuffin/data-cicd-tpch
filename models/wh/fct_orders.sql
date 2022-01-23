@@ -1,17 +1,34 @@
 {{
     config(
-        materialized = 'table'
+        materialized = 'incremental',
+        unique_key = 'order_key',
+        on_schema_change = 'sync_all_columns'
+
     )
 }}
 with orders as (
 
     select * from {{ ref('orders') }}
 
+    {% if is_incremental() %}
+
+    -- this filter will only be applied on an incremental run
+    where order_date > (select max(order_date) from {{ this }})
+
+    {% endif %}
+
 ),
 
 orders_items as (
 
     select * from {{ ref('orders_items') }}
+
+    {% if is_incremental() %}
+
+    -- this filter will only be applied on an incremental run
+    where order_date > (select max(order_date) from {{ this }})
+
+    {% endif %}
 
 ),
 
@@ -50,10 +67,10 @@ final as (
         on orders.order_key = order_item_summary.order_key
 )
 
-select
-    final.*,
-    {{ dbt_housekeeping() }}
-from
-    final
-order by
-    final.order_date
+{{ dbt_audit(
+    cte_ref="final",
+    created_by="@davidgriffiths",
+    updated_by="@wisemuffin",
+    created_date="2020-06-01",
+    updated_date="2022-01-23"
+) }}
