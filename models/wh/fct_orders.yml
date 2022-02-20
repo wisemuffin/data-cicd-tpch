@@ -60,4 +60,27 @@ models:
             description: amount of all items on the order after discounts and tax
             tests:
                 - not_null
+
+metrics:
+  - name: new_orders
+    label: New Orders
+    model: ref('fct_orders')
+    description: "The number of new orders"
+
+    type: count
+    sql: order_key # superfluous here, but shown as an example
+
+    timestamp: order_date
+    time_grains: [day, week, month]
+
+    dimensions:
+      - order_status_code
+    
+    filters:
+      - field: net_check_amount
+        operator: '>'
+        value: '0'
+
+
+    meta: {team: Finance}
                 

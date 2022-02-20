@@ -28,6 +28,7 @@ quoting:
 
 vars:
       max_ship_date: "'1998-12-01'"
+      dbt_metrics_calendar_model: ref('dbt_metrics_default_calendar_custom')
       
 models:
   DBT_TPCH_CICD:

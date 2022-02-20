@@ -3,3 +3,5 @@ packages:
     version: 0.8.0
   - package: "omnata-labs/dbt_ml_preprocessing"
     version: [">=1.0.2"]
+  - package: dbt-labs/metrics
+    version: 0.1.2
