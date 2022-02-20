@@ -3,6 +3,7 @@
         materialized = 'table'
     )
 }}
+-- depends_on: {{ ref('fct_orders') }}
 select * 
 from {{ metrics.metric(
     metric_name='new_orders',
