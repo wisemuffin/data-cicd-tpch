@@ -202,6 +202,17 @@ PR_HEAD_SHA=$(cat $GITHUB_EVENT_PATH | jq -r .pull_request.head.sha)
 See [airflow-dbt](https://github.com/wisemuffin/airflow-dbt)
 
 
+# Security
+
+## dbt and snowflake dynamic data masking
+inspired by [jetblue dbt 2020 coalecse](https://www.youtube.com/watch?v=NPQOTm1XITw)
+
+A packages was created for this but in the .yaml file: https://hub.getdbt.com/entechlog/dbt_snow_mask/latest/
+
+> :warning: **Snowflake Dynamic Masking feature requires Enterprise Edition (or higher).**:
+
+
+
 # Tips and Tricks
 
 - Using dbt power user vs code can get autocomplete on dbt_utils just type 

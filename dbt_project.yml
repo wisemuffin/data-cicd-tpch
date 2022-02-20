@@ -40,3 +40,5 @@ models:
       schema: ods
     wh:
       schema: wh
+    post-hook: 
+      - "{{ dbt_snow_mask.apply_masking_policy() }}"
