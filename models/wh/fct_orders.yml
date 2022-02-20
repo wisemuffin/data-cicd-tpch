@@ -36,6 +36,8 @@ models:
           - name: order_clerk_name
             tests:
                 - not_null
+            meta:
+                masking_policy: temp
                 
           - name: shipping_priority
             tests:

@@ -5,3 +5,5 @@ packages:
     version: [">=1.0.2"]
   - package: dbt-labs/metrics
     version: 0.1.2
+  - package: entechlog/dbt_snow_mask
+    version: 0.1.6
